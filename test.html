@@ -34,9 +34,8 @@
                 sum+=file.files.item(i).size/Math.pow(2,20)
             }
             symbolCount+=file.files.item(i).size
-           
         }
-        if(sum*Math.pow(2,10)<Math.pow(2,20)){
+        if(!sum*Math.pow(2,10)<Math.pow(2,20)){
             sizeresult.innerHTML+=Math.round(sum) +` <strong>Kb<strong>`
         }else{
             sizeresult.innerHTML+=Math.round(sum) +` <strong>Mb<strong>`
