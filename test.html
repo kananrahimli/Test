@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <!-- &lt;p&gt;Item1&lt;/p&gt; -->
+    <input type="file"  id="file" multiple/>
+    <p id="result">File Count:</p>
+    <p id="symbol">Symbol Count:</p>
+    <p id="sizeresult">File Size:</p>
+    <button onclick="showResult()">Show result</button>
+  </body>
+  <script>
+    var file = document.querySelector("#file");
+    var result = document.querySelector("#result");
+    var sizeresult = document.querySelector("#sizeresult");
+    var symbol = document.querySelector("#symbol");
+    function showResult() {
+    
+      if (file.files.length > 0) {
+        result.innerHTML += file.files.length;
+        // console.log(file.files.item.size)
+        var sum=0;
+        var symbolCount=0;
+        for (let i = 0; i <= file.files.length - 1; i++) {
+
+            if(file.files.item(i).size<Math.pow(2,20)){
+                sum+=file.files.item(i).size/Math.pow(2,10)
+            }else{
+                sum+=file.files.item(i).size/Math.pow(2,20)
+            }
+            symbolCount+=file.files.item(i).size
+           
+        }
+        if(sum<Math.pow(2,20)){
+            sizeresult.innerHTML+=Math.round(sum) +` <strong>Kb<strong>`
+        }else{
+            sizeresult.innerHTML+=Math.round(sum) +` <strong>Mb<strong>`
+        }
+        symbol.innerHTML+=symbolCount
+        
+      }
+    }
+  </script>
+</html>
