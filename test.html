@@ -8,7 +8,7 @@
   </head>
   <body>
     <!-- &lt;p&gt;Item1&lt;/p&gt; -->
-    <input type="file"  id="file" multiple/>
+    <input type="file" id="file" multiple />
     <p id="result">File Count:</p>
     <p id="symbol">Symbol Count:</p>
     <p id="sizeresult">File Size:</p>
@@ -20,30 +20,26 @@
     var sizeresult = document.querySelector("#sizeresult");
     var symbol = document.querySelector("#symbol");
     function showResult() {
-    
       if (file.files.length > 0) {
         result.innerHTML += file.files.length;
         // console.log(file.files.item.size)
-        var sum=0;
-        var symbolCount=0;
+        var sum = 0;
+        var symbolCount = 0;
         for (let i = 0; i <= file.files.length - 1; i++) {
-
-            if(file.files.item(i).size<Math.pow(2,10)){
-                sum+=file.files.item(i).size/Math.pow(2,10)
-            }else{
-                sum+=file.files.item(i).size/Math.pow(2,20)
-            }
-            symbolCount+=file.files.item(i).size
+          if (file.files.item(i).size < Math.pow(2, 10)) {
+            sum += file.files.item(i).size / Math.pow(2, 10);
+          } else {
+            sum += file.files.item(i).size / Math.pow(2, 20);
+          }
+          symbolCount += file.files.item(i).size;
         }
-        if(!sum*Math.pow(2,10)<Math.pow(2,20)){
-            sizeresult.innerHTML+=Math.round(sum) +` <strong>Kb<strong>`
-        }else{
-            sizeresult.innerHTML+=Math.round(sum) +` <strong>Mb<strong>`
+        if (sum * Math.pow(2, 10) < Math.pow(2, 20)) {
+          sizeresult.innerHTML += Math.round(sum) + ` <strong>Mb<strong>`;
+        } else {
+          sizeresult.innerHTML += Math.round(sum) + ` <strong>Kb<strong>`;
         }
 
-
-        symbol.innerHTML+=symbolCount
-        
+        symbol.innerHTML += symbolCount;
       }
     }
   </script>
