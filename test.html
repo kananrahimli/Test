@@ -5,14 +5,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.min.js"
+      integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body>
-    <!-- &lt;p&gt;Item1&lt;/p&gt; -->
-    <input type="file"  id="file" multiple/>
+    <input type="file" id="file" multiple />
     <p id="result">File Count:</p>
     <p id="symbol">Symbol Count:</p>
     <p id="sizeresult">File Size:</p>
     <button onclick="showResult()">Show result</button>
+    <!-- <input name="upload" type="file" id="upload" accept="text" accesskey="u" />
+    <div><span id="display_File_count">0</span> <span> words</span></div> -->
   </body>
   <script>
     var file = document.querySelector("#file");
@@ -20,31 +26,43 @@
     var sizeresult = document.querySelector("#sizeresult");
     var symbol = document.querySelector("#symbol");
     function showResult() {
-      console.log(file.files.item(0).size/1024)
       if (file.files.length > 0) {
         result.innerHTML += file.files.length;
-        // console.log(file.files.item.size)
-        var sum=0;
+        var sum = 0;
         var symbolCount=0;
         for (let i = 0; i <= file.files.length - 1; i++) {
+          if (file.files.item(i).size / Math.pow(2, 10) < Math.pow(2, 10)) {
+            sum +=
+              (file.files[i].size / Math.pow(2, 10)) * Math.pow(2, -10);
+          } else {
+            sum += file.files[i].size / Math.pow(2, 20);
+          }
 
-            if((file.files.item(i).size/Math.pow(2,10))<Math.pow(2,10)){
-                sum+=(file.files.item(i).size/Math.pow(2,10))*Math.pow(2,-10)
-            }else{
-                sum+=file.files.item(i).size/Math.pow(2,20)
-            }
-            symbolCount+=file.files.item(i).size
-           
-        }
-        if(sum*Math.pow(2,10)<Math.pow(2,10)){
-            sizeresult.innerHTML+=Math.round(sum*Math.pow(2,10)) +` <strong>Kb<strong>`
-        }else{
-            sizeresult.innerHTML+=(sum).toFixed(2) +` <strong>Mb<strong>`
+          console.log(file.files[i].size)
+
+          var f = file.files;
+
+          if (f[i]) {
+            var r = new FileReader(); //create file reader object
+            r.readAsText(f[i]); //read file as text
+
+            //attach function to execute when loading file finishes.
+            r.onload = function (e) {
+              var contents = e.target.result;
+              var res = [...contents];
+              console.log(res.length);
+              symbolCount += res.length;
+              symbol.innerHTML=`<span>Symbols count:</span> ${symbolCount}`;
+            };
+          }
         }
 
-        
-        symbol.innerHTML+=symbolCount
-        
+        if (sum * Math.pow(2, 10) < Math.pow(2, 10)) {
+          sizeresult.innerHTML +=
+            Math.round(sum * Math.pow(2, 10)) + ` <strong>Kb<strong>`;
+        } else {
+          sizeresult.innerHTML += sum.toFixed(2) + ` <strong>Mb<strong>`;
+        }
       }
     }
   </script>
